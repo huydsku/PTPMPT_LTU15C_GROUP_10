@@ -1,7 +1,7 @@
 # Bài tập lớn môn học Phát triển phần mềm phân tán
 ### Đề tài: Hệ thống dự báo thời tiết
 <br>
-Thành viên nhóm 1:
+Thành viên nhóm 10:
 <br>
 
 - Nguyễn Tiến Dũng
