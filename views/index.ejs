@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" const="text/html;charset=UTF-8" />
+    <link href="http://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="style.css" >
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Simple Chat App</title>
+  </head>
+
+  <body>
+    <!-- <header>
+      <h1>Super Chat</h1>
+    </header>
+
+    <section>
+      <div id="change_username">
+	<input id="username" type="text" />
+	<button id="send_username" type="button">Change username</button>
+      </div>
+    </section>
+
+    <section id="chatroom">
+      <section id="feedback"></section>
+    </section>
+
+    
+
+    <section id="input_zone"> 
+      <input id="message" class="vertical-align" type="text" />
+      <button id="send_message" class="vertical-align" type="button">Send</button>
+    </section> -->
+
+    <div class="container main">
+      <div class="time  d-flex justify-content-center">Tuesday, December 15</div>
+      <div class="title  d-flex justify-content-between">
+        <p class="city">City</p>
+        <p class="time">Time</p>
+      </div>
+      <div class="overview ">
+        <div class="temp d-flex justify-content-center">24</div>
+        <div class="desc d-flex justify-content-center">broken clouds</div>
+        <div class="icon cloud">
+          <img id="animate" src="http://openweathermap.org/img/w/04d.png">
+        </div>
+        <!-- <div class="icon sun">04d</div>
+        <div class="icon rain">04d</div> -->
+      </div>
+
+      <ul class="info list-group">
+        <li class="list-group-item d-flex justify-content-between">
+          <p>Feels like</p>
+          <p>feels_like</p>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between">
+          <p>Temp min</p>
+          <p>temp_min</p>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between">
+          <p>Temp max</p>
+          <p>temp_max</p>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between">
+          <p>Pressure</p>
+          <p>pressure</p>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between">
+          <p>Humidity</p>
+          <p>humidity</p>
+        </li>  
+
+
+      </ul>
+
+    </div>
+
+  </body>
+
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="chat.js"></script>
+</html>
+
+<script>
+  function myMove() {
+    var elem = document.getElementById("animate"); 
+    var width = $(".icon").width();
+    var pos = 0;
+    var id = setInterval(frame, 2);
+    function frame() {
+      if (pos == (width-200)) {
+        clearInterval(id);
+      } else {
+        pos++; 
+        elem.style.left = pos + "px"; 
+      } 
+    }
+  }
+
+  $(function(){
+      //make connection
+    var socket = io.connect('http://localhost:3000')
+
+    //buttons and inputs
+    var message = $("#message")
+    var username = $("#username")
+    var send_message = $("#send_message")
+    var send_username = $("#send_username")
+    var chatroom = $("#chatroom")
+    var feedback = $("#feedback")
+
+    //Emit message
+    send_message.click(function(){
+      socket.emit('new_message', {message : message.val()})
+    })
+
+    //Listen on new_message
+    socket.on("new_message", (data) => {
+      feedback.html('');
+      message.val('');
+      chatroom.append("<p class='message'>" + data.username + ": " + data.message + "</p>")
+    })
+
+    //Emit a username
+    send_username.click(function(){
+      socket.emit('change_username', {username : username.val()})
+    })
+
+    //Emit typing
+    message.bind("keypress", () => {
+      socket.emit('typing')
+    })
+
+    //Listen on typing
+    socket.on('typing', (data) => {
+      feedback.html("<p><i>" + data.username + " is typing a message..." + "</i></p>")
+    })
+  });
+</script>
+
+<style>
+  .main {
+    font-size: 3rem;
+    padding-top: 200px;
+  }
+
+  .title{
+    padding-top: 100px;
+  }
+
+  .icon {
+    opacity: 0.5; 
+    position: relative;
+    height: 200px;
+  }
+
+  #animate {
+    position: absolute;
+  } 
+
+  .icon img {
+    height: 200px;
+    width: 200px;
+  }
+
+  .temp{
+    padding: 10px 0 10px;
+    font-size: 5rem;
+    font-weight: bold;
+  }
+</style>
