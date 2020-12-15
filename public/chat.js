@@ -23,7 +23,6 @@ async function init(){
 	socket.on("change_process", (data) => {
 		if (userID == data.userID){
 			myMove(function() {
-				socket.emit('change_process', {exist: "1"})
 				var elem = document.getElementById("animate"); 
 				elem.style.display = "none";
 			});

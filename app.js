@@ -73,17 +73,13 @@ io.on('connection', (socket) => {
 
     setTimeout(function(){ 
         if (process == 0 && list_id.length == 1){
-            console.log("1")
             io.sockets.emit('change_process', {userID : list_id[process]});
         } 
     }, 500)
 
     setTimeout(function(){ 
-        socket.on('change_process', (data) => {
+        socket.on('change_process', () => {
             
-            if(data.exist != "1"){
-                process = process + 1
-            }
             if (process + 1 > list_id.length - 1){
                 process = 0
             }else{
