@@ -33,15 +33,15 @@
     </section> -->
 
     <div class="container main">
-      <div class="time  d-flex justify-content-center">Tuesday, December 15</div>
+      <div class="time  d-flex justify-content-center"><%= dt %></div>
       <div class="title  d-flex justify-content-between">
-        <p class="city">City</p>
-        <p class="time">Time</p>
+        <p class="city">Ha noi</p>
+        <p class="time"><%= time %></p>
       </div>
       <div class="overview ">
-        <div class="temp d-flex justify-content-center">24</div>
-        <div class="desc d-flex justify-content-center">broken clouds</div>
-        <div class="icon cloud">
+        <div class="temp d-flex justify-content-center"><%= temp %></div>
+        <div class="desc d-flex justify-content-center"><%= desc %></div>
+        <div class="icon cloud hidden">
           <img id="animate" src="http://openweathermap.org/img/w/04d.png">
         </div>
         <!-- <div class="icon sun">04d</div>
@@ -51,27 +51,27 @@
       <ul class="info list-group">
         <li class="list-group-item d-flex justify-content-between">
           <p>Feels like</p>
-          <p>feels_like</p>
+          <p><%= feels_like %></p>
         </li>
 
         <li class="list-group-item d-flex justify-content-between">
           <p>Temp min</p>
-          <p>temp_min</p>
+          <p><%= temp_min %></p>
         </li>
 
         <li class="list-group-item d-flex justify-content-between">
           <p>Temp max</p>
-          <p>temp_max</p>
+          <p><%= temp_max %></p>
         </li>
 
         <li class="list-group-item d-flex justify-content-between">
           <p>Pressure</p>
-          <p>pressure</p>
+          <p><%= pressure %></p>
         </li>
 
         <li class="list-group-item d-flex justify-content-between">
           <p>Humidity</p>
-          <p>humidity</p>
+          <p><%= humidity %></p>
         </li>  
 
 
@@ -84,63 +84,6 @@
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script src="chat.js"></script>
 </html>
-
-<script>
-  function myMove() {
-    var elem = document.getElementById("animate"); 
-    var width = $(".icon").width();
-    var pos = 0;
-    var id = setInterval(frame, 2);
-    function frame() {
-      if (pos == (width-200)) {
-        clearInterval(id);
-      } else {
-        pos++; 
-        elem.style.left = pos + "px"; 
-      } 
-    }
-  }
-
-  $(function(){
-      //make connection
-    var socket = io.connect('http://localhost:3000')
-
-    //buttons and inputs
-    var message = $("#message")
-    var username = $("#username")
-    var send_message = $("#send_message")
-    var send_username = $("#send_username")
-    var chatroom = $("#chatroom")
-    var feedback = $("#feedback")
-
-    //Emit message
-    send_message.click(function(){
-      socket.emit('new_message', {message : message.val()})
-    })
-
-    //Listen on new_message
-    socket.on("new_message", (data) => {
-      feedback.html('');
-      message.val('');
-      chatroom.append("<p class='message'>" + data.username + ": " + data.message + "</p>")
-    })
-
-    //Emit a username
-    send_username.click(function(){
-      socket.emit('change_username', {username : username.val()})
-    })
-
-    //Emit typing
-    message.bind("keypress", () => {
-      socket.emit('typing')
-    })
-
-    //Listen on typing
-    socket.on('typing', (data) => {
-      feedback.html("<p><i>" + data.username + " is typing a message..." + "</i></p>")
-    })
-  });
-</script>
 
 <style>
   .main {
@@ -159,6 +102,7 @@
   }
 
   #animate {
+    display: none;
     position: absolute;
   } 
 
