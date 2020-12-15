@@ -15,7 +15,7 @@ var user = 0
 var list_id = []
 
 
-//routes
+//routes 
 app.get('/', (req, res) => {
 
     fetch('http://api.openweathermap.org/data/2.5/weather?q=Hanoi&APPID=c96240e8d3499ee5e3e1c2c7078ed08c&units=metric')
