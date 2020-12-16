@@ -1,20 +1,15 @@
 
 $(init());
 
-// async function getData() {
-// 	// Default options are marked with *
-// 	const response = await fetch('http://localhost:3000/weather')
 
-// 	return response.json(); // parses JSON response into native JavaScript objects
-// }
 
 async function init(){
-	//make connection
+	
 	var socket = io.connect('http://localhost:8080')
 
-	// var data = await getData()
+	
 
-	// console.log(data.id)
+	
 
 	const userID = Date.now()
 
@@ -30,40 +25,7 @@ async function init(){
 		}
 	})
 
-	// //buttons and inputs
-	// var message = $("#message")
-	// var username = $("#username")
-	// var send_message = $("#send_message")
-	// var send_username = $("#send_username")
-	// var chatroom = $("#chatroom")
-	// var feedback = $("#feedback")
-
-	// //Emit message
-	// send_message.click(function(){
-	// 	socket.emit('new_message', {message : message.val()})
-	// })
-
-	// //Listen on new_message
-	// socket.on("new_message", (data) => {
-	// 	feedback.html('');
-	// 	message.val('');
-	// 	chatroom.append("<p class='message'>" + data.username + ": " + data.message + "</p>")
-	// })
-
-	// //Emit a username
-	// send_username.click(function(){
-	// 	socket.emit('change_username', {username : username.val()})
-	// })
-
-	// //Emit typing
-	// message.bind("keypress", () => {
-	// 	socket.emit('typing')
-	// })
-
-	// //Listen on typing
-	// socket.on('typing', (data) => {
-	// 	feedback.html("<p><i>" + data.username + " is typing a message..." + "</i></p>")
-	// })
+	
  
 }
 
