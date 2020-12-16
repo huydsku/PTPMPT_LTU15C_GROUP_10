@@ -1,7 +1,9 @@
 
 $(init());
-
-
+async function getData() {
+const res = await fetch('http://localhost:3000/weather')
+return res.json()
+}
 
 async function init(){
 	
